@@ -19,15 +19,17 @@ from products
 where stock =0;
 
 -- Lấy ra danh sách nguời dùng và số lượng mặt hàng mặt hàng ngừoi đó đang có trong giỏ hàng
-select users.fullname, count(cart_items.product_id) as total_items
+select users.fullname, sum(cart_items.quantity) as total_items
 from users
     INNER join carts on users.id = carts.user_id
     INNER join cart_items on carts.id = cart_items.cart_id
 where users.role = 'user'
-group by user_id;
+group by cart_id;
 
 -- Tính tổng tiền lãi thu được nếu bán hết hàng trong kho
 select sum(price * stock) - sum(original_price * stock) as total_profit
 from products
 where stock > 0;
+
+
 
